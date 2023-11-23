@@ -19,7 +19,7 @@ LOGGER = get_logger(__name__)
 
 
 def run():
-    st.write(st.secrets["HOST"])
+    st.write(st.secrets.HOST)
     st.write(st.secrets["USER"])
     st.write(st.secrets["DATABASE"])
     st.set_page_config(
