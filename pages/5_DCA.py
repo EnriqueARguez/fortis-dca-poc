@@ -98,7 +98,7 @@ st.plotly_chart(fig)
 show_data = st.checkbox('Mostrar tabla')
 
 if show_data:
-    st.write(risk_df[['datetime', 'symbol', 'close', 'risk_price']])
+    st.write(risk_df[['date_time', 'symbol', 'close', 'risk_price']])
 
 st.markdown('___')
 
