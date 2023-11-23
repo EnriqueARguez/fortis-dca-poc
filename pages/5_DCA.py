@@ -164,8 +164,9 @@ with col2:
 
 with col3:
     select_dist3 = st.text_input('Distribución bandas altas', key = 'select_dist3', value = '0.2')
+st.write('Nota: La suma debe ser igual a 1.')
 
-dca_buy_df = calculate_buy_dca(sell_matrix, float(0 if select_amount2 == '' else select_amount2), float(0 if select_dist1 == '' else select_dist1), float(0 if select_dist2 == '' else select_dist2), float(0 if select_dist3 == '' else select_dist3))
+dca_buy_df = calculate_buy_dca(buy_matrix, float(0 if select_amount2 == '' else select_amount2), float(0 if select_dist1 == '' else select_dist1), float(0 if select_dist2 == '' else select_dist2), float(0 if select_dist3 == '' else select_dist3))
 # dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct', 'ganancia_total']
 
 st.write(dca_buy_df)
