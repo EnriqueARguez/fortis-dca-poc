@@ -29,6 +29,9 @@ def data_frame_demo():
         return df.set_index("Region")
 
     try:
+        st.write(st.secrets["HOST"])
+        st.write(st.secrets["USER"])
+        st.write(st.secrets["DATABASE"])
         df = get_UN_data()
         countries = st.multiselect(
             "Choose countries", list(df.index), ["China", "United States of America"]
