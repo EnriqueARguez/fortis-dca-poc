@@ -10,7 +10,7 @@ import plotly.express as px
 
 
 @st.cache_data
-def get_risk_data():
+def get_risk_data(moneda):
     conn = mysql.connector.connect(host=st.secrets["HOST"], 
                             user=st.secrets["USER"], 
                             password=st.secrets["PASSWORD"], 
@@ -24,7 +24,7 @@ def get_risk_data():
     cursor.close()
     conn.close()
     df = pd.DataFrame(result,columns=column_names)
-    return df
+    return df[df.symbol.str.contains(moneda)]
 
 #===============SIDEBAR===============
 sidebar = st.sidebar
@@ -34,7 +34,7 @@ select_moneda = sidebar.selectbox('Elija el nivel educativo',
                               options = ["BTC", "ETH"])
 #=====================================
 
-risk_df = get_risk_data()
+risk_df = get_risk_data(select_moneda)
 
 st.header("DCA Strategy")
 
@@ -42,6 +42,6 @@ st.write("""
     Estrategia DCA aplicado a criptomonedas como Bitcoin y Ethereum
 """)
 
-fig = px.line(risk_df[risk_df.symbol.str.contains(select_moneda)], x="date_time", y="risk_price", title="Risk Graph")
+fig = px.line(risk_df, x="date_time", y="risk_price", title="Risk Graph")
 
 st.write(risk_df)
