@@ -30,13 +30,15 @@ def get_mlmodel_data(moneda):
                             password=st.secrets["PASSWORD"], 
                             database=st.secrets["DATABASE"])
     cursor = conn.cursor()
-    cursor.execute("select * from analytics.ml_risk_metrics order by 1, 2")
+    cursor.execute(f"""select * from analytics.ml_risk_metrics
+                   where ticker like '%{moneda}%'
+                   order by 1, 2""")
     column_names = [desc[0] for desc in cursor.description]
     result: tuple = cursor.fetchall()
     cursor.close()
     conn.close()
     df = pd.DataFrame(result,columns=column_names)
-    return df[df.symbol.str.contains(moneda)]
+    return df
 
 @st.cache_data
 def get_sell_matrix():
