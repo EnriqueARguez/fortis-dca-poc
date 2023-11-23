@@ -43,5 +43,6 @@ st.write("""
 """)
 
 fig = px.line(risk_df, x="date_time", y="risk_price", title="Risk Graph")
+st.plotly_chart(fig)
 
 st.write(risk_df)
