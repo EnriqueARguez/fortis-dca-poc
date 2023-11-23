@@ -56,6 +56,21 @@ def get_sell_matrix():
     return df
 
 @st.cache_data
+def get_buy_matrix():
+    conn = mysql.connector.connect(host=st.secrets["HOST"], 
+                            user=st.secrets["USER"], 
+                            password=st.secrets["PASSWORD"], 
+                            database=st.secrets["DATABASE"])
+    cursor = conn.cursor()
+    cursor.execute("select * from analytics.matriz_compras")
+    column_names = [desc[0] for desc in cursor.description]
+    result: tuple = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    df = pd.DataFrame(result,columns=column_names)
+    return df
+
+@st.cache_data
 def calculate_sell_dca(data : pd.DataFrame, matrix : pd.DataFrame, amount : float):
     r04 = data[data['risk'] >= 0.4]['price'].min()
     r05 = data[data['risk'] >= 0.5]['price'].min()
@@ -90,6 +105,7 @@ select_amount2 = sidebar.text_input(f'Introduzca la cantidad de USD a implementa
 risk_df = get_risk_data(select_moneda)
 mldata_df = get_mlmodel_data(select_moneda)
 sell_matrix = get_sell_matrix()
+buy_matrix = get_buy_matrix()
 
 st.header("DCA Strategy")
 
@@ -118,3 +134,10 @@ dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60p
 
 st.write(dca_sell_df)
 
+st.markdown('##')
+st.header('Matriz DCA Compra')
+
+st.write(f"""
+    A continuación se muestra la matriz de venta DCA para\
+    la cantidad a comprar de {0 if select_amount2 == '' else select_amount2} USD.
+""")
