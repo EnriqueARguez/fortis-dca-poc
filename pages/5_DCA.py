@@ -69,6 +69,7 @@ def calculate_sell_dca(data : pd.DataFrame, matrix : pd.DataFrame, amount : floa
     matrix['r07'] *= r07 * amount
     matrix['r08'] *= r08 * amount
     matrix['r09'] *= r09 * amount
+    matrix['rt'] = matrix.iloc[:,1:].sum(axis=1)
     return matrix
 
 #===============SIDEBAR===============
