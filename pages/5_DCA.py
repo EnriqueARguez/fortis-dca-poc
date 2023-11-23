@@ -25,10 +25,14 @@ def get_risk_data():
     df = pd.DataFrame(result,columns=column_names)
     return df
 
-risk_df = get_risk_data()
+# risk_df = get_risk_data()
 
 st.write("""
     Este es un ejemplo.
 """)
 
-st.write(risk_df)
+st.write(st.secrets["HOST"])
+st.write(st.secrets["USER"])
+st.write(st.secrets["DATABASE"])
+
+# st.write(risk_df)
