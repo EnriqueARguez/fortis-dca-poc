@@ -6,6 +6,7 @@ import pandas as pd
 import streamlit as st
 import mysql.connector
 from mysql.connector import Error
+import plotly.express as px
 
 
 @st.cache_data
@@ -25,14 +26,25 @@ def get_risk_data():
     df = pd.DataFrame(result,columns=column_names)
     return df
 
+#===============SIDEBAR===============
+sidebar = st.sidebar
+sidebar.header('Sección de Filtros')
+
+select_moneda = sidebar.selectbox('Elija el nivel educativo',
+                              options = ["BTC", "ETH"])
+#=====================================
+
+st.set_page_config(page_title="Mi Dashboard",
+                   page_icon=":busts_in_silhouette:")
+
 risk_df = get_risk_data()
 
+st.header("DCA Strategy")
+
 st.write("""
-    Este es un ejemplo.
+    Estrategia DCA aplicado a criptomonedas como Bitcoin y Ethereum
 """)
 
-st.write(st.secrets["HOST"])
-st.write(st.secrets["USER"])
-st.write(st.secrets["DATABASE"])
+fig = px.line(risk_df[risk_df.symbol.str.contains(select_moneda)], x="date_time", y="risk_price", title="Risk Graph")
 
 st.write(risk_df)
