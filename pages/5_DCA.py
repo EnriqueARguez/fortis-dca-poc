@@ -103,15 +103,15 @@ def calculate_buy_dca(matrix : pd.DataFrame, amount : float, dist1 : float, dist
 sidebar = st.sidebar
 sidebar.header('Sección de Filtros')
 
-select_moneda = sidebar.selectbox('Elija el nivel educativo',
+select_moneda = sidebar.selectbox('Elija la criptomoneda',
                                     options = ["BTC", "ETH"])
-select_perfil = sidebar.selectbox('Elija el nivel educativo',
-                                    options = ["conservador", "moderado", "agresivo", "super_agresivo", "hodler", "yolo"])
+# select_perfil = sidebar.selectbox('Elija el nivel educativo',
+#                                     options = ["conservador", "moderado", "agresivo", "super_agresivo", "hodler", "yolo"])
 sidebar.markdown('##')
 # select_amount = sidebar.slider(f'Cantidad de {select_moneda}', 0.0, 100.0, 15.0)
-select_amount = sidebar.text_input(f'Introduzca la cantidad de {select_moneda} a implementar con DCA', key = 'select_amount')
+select_amount = sidebar.text_input(f'Introduzca la cantidad de {select_moneda} a implementar con DCA', key = 'select_amount', value = '1.0')
 sidebar.markdown('##')
-select_amount2 = sidebar.text_input(f'Introduzca la cantidad de USD a implementar con DCA', key = 'select_amount2')
+select_amount2 = sidebar.text_input(f'Introduzca la cantidad de USD a implementar con DCA', key = 'select_amount2', value = '1000')
 #=====================================
 
 risk_df = get_risk_data(select_moneda)
@@ -167,6 +167,6 @@ with col3:
 st.write('Nota: La suma debe ser igual a 1.')
 
 dca_buy_df = calculate_buy_dca(buy_matrix, float(0 if select_amount2 == '' else select_amount2), float(0 if select_dist1 == '' else select_dist1), float(0 if select_dist2 == '' else select_dist2), float(0 if select_dist3 == '' else select_dist3))
-# dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct', 'ganancia_total']
+dca_buy_df.columns = ['perfil_riesgo', 'banda_0pct', 'banda_10pct', 'banda_20pct', 'banda_30pct', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct']
 
 st.write(dca_buy_df)
