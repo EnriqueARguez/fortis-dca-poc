@@ -80,8 +80,11 @@ select_moneda = sidebar.selectbox('Elija el nivel educativo',
                                     options = ["BTC", "ETH"])
 select_perfil = sidebar.selectbox('Elija el nivel educativo',
                                     options = ["conservador", "moderado", "agresivo", "super_agresivo", "hodler", "yolo"])
+sidebar.markdown('##')
 # select_amount = sidebar.slider(f'Cantidad de {select_moneda}', 0.0, 100.0, 15.0)
 select_amount = sidebar.text_input(f'Introduzca la cantidad de {select_moneda} a implementar con DCA', key = 'select_amount')
+sidebar.markdown('##')
+select_amount2 = sidebar.text_input(f'Introduzca la cantidad de USD a implementar con DCA', key = 'select_amount2')
 #=====================================
 
 risk_df = get_risk_data(select_moneda)
@@ -107,10 +110,10 @@ st.header('Matriz DCA Venta')
 
 st.write(f"""
     A continuación se muestra la matriz de venta DCA para\
-    la cantidad a vender de {select_amount.replace('','0')} {select_moneda}.
+    la cantidad a vender de {0 if select_amount == '' else select_amount} {select_moneda}.
 """)
 
-dca_sell_df = calculate_sell_dca(mldata_df, sell_matrix, float(select_amount.replace('','0')))
+dca_sell_df = calculate_sell_dca(mldata_df, sell_matrix, float(0 if select_amount == '' else select_amount))
 dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct', 'ganancia_total']
 
 st.write(dca_sell_df)
