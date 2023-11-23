@@ -84,6 +84,7 @@ select_amount = sidebar.slider(f'Cantidad de {select_moneda}', 0.0, 1000.0, 1.0)
 
 risk_df = get_risk_data(select_moneda)
 mldata_df = get_mlmodel_data(select_moneda)
+sell_matrix = get_sell_matrix()
 
 st.header("DCA Strategy")
 
@@ -98,7 +99,7 @@ st.write(risk_df)
 
 st.markdown('___')
 
-dca_sell_df = calculate_sell_dca(mldata_df, mldata_df, select_amount)
+dca_sell_df = calculate_sell_dca(mldata_df, sell_matrix, select_amount)
 
 st.write(dca_sell_df)
 
