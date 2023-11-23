@@ -87,6 +87,18 @@ def calculate_sell_dca(data : pd.DataFrame, matrix : pd.DataFrame, amount : floa
     matrix['rt'] = matrix.iloc[:,1:].sum(axis=1)
     return matrix
 
+@st.cache_data
+def calculate_buy_dca(matrix : pd.DataFrame, amount : float, dist1 : float, dist2 : float, dist3 : float):
+    matrix['r00'] *= amount * dist1
+    matrix['r01'] *= amount * dist1
+    matrix['r02'] *= amount * dist2
+    matrix['r03'] *= amount * dist2
+    matrix['r04'] *= amount * dist3
+    matrix['r05'] *= amount * dist3
+    matrix['r06'] *= amount * dist3
+    matrix['r07'] *= amount * dist3
+    return matrix
+
 #===============SIDEBAR===============
 sidebar = st.sidebar
 sidebar.header('Sección de Filtros')
@@ -100,18 +112,6 @@ sidebar.markdown('##')
 select_amount = sidebar.text_input(f'Introduzca la cantidad de {select_moneda} a implementar con DCA', key = 'select_amount')
 sidebar.markdown('##')
 select_amount2 = sidebar.text_input(f'Introduzca la cantidad de USD a implementar con DCA', key = 'select_amount2')
-col1, col2, col3 = sidebar.columns(3)
-with col1:
-    sidebar.write("Distribución bandas bajas")
-    select_dist1 = sidebar.text_input('', key = 'select_dist1', value = '0.1')
-
-with col2:
-    sidebar.write("Distribución bandas medias")
-    select_dist2 = sidebar.text_input('', key = 'select_dist2', value = '0.7')
-
-with col3:
-    sidebar.write("Distribución bandas altas")
-    select_dist3 = sidebar.text_input('', key = 'select_dist3', value = '0.2')
 #=====================================
 
 risk_df = get_risk_data(select_moneda)
@@ -154,4 +154,18 @@ st.write(f"""
     la cantidad a comprar de {0 if select_amount2 == '' else select_amount2} USD.
 """)
 
-st.write(buy_matrix)
+# st.write("""Distribuciones de dinero en las bandas de riesgo:""")
+col1, col2, col3 = st.columns(3)
+with col1:
+    select_dist1 = st.text_input('Distribución bandas bajas', key = 'select_dist1', value = '0.1')
+
+with col2:
+    select_dist2 = st.text_input('Distribución bandas medias', key = 'select_dist2', value = '0.7')
+
+with col3:
+    select_dist3 = st.text_input('Distribución bandas altas', key = 'select_dist3', value = '0.2')
+
+dca_buy_df = calculate_buy_dca(sell_matrix, float(0 if select_amount2 == '' else select_amount2), float(0 if select_dist1 == '' else select_dist1), float(0 if select_dist2 == '' else select_dist2), float(0 if select_dist3 == '' else select_dist3))
+# dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct', 'ganancia_total']
+
+st.write(dca_buy_df)
