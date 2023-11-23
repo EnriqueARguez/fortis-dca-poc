@@ -100,6 +100,18 @@ sidebar.markdown('##')
 select_amount = sidebar.text_input(f'Introduzca la cantidad de {select_moneda} a implementar con DCA', key = 'select_amount')
 sidebar.markdown('##')
 select_amount2 = sidebar.text_input(f'Introduzca la cantidad de USD a implementar con DCA', key = 'select_amount2')
+col1, col2, col3 = sidebar.columns(3)
+with col1:
+    sidebar.write("Distribución bandas bajas")
+    select_dist1 = sidebar.text_input('', key = 'select_dist1', value = '0.1')
+
+with col2:
+    sidebar.write("Distribución bandas medias")
+    select_dist2 = sidebar.text_input('', key = 'select_dist2', value = '0.7')
+
+with col3:
+    sidebar.write("Distribución bandas altas")
+    select_dist3 = sidebar.text_input('', key = 'select_dist3', value = '0.2')
 #=====================================
 
 risk_df = get_risk_data(select_moneda)
