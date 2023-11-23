@@ -3,3 +3,5 @@ numpy
 pandas
 pydeck
 streamlit
+plotly-express
+mysql-connector-python
