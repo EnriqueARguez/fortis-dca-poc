@@ -98,11 +98,19 @@ st.plotly_chart(fig)
 show_data = st.checkbox('Mostrar tabla')
 
 if show_data:
-    st.write(risk_df)
+    st.write(risk_df[['datetime', 'symbol', 'close', 'risk_price']])
 
 st.markdown('___')
 
+st.header('Matriz DCA Venta')
+
+st.write(f"""
+    A continuación se muestra la matriz de venta DCA para\
+    la cantidad a vender de {select_amount} {select_moneda}.
+""")
+
 dca_sell_df = calculate_sell_dca(mldata_df, sell_matrix, select_amount)
+dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct']
 
 st.write(dca_sell_df)
 
