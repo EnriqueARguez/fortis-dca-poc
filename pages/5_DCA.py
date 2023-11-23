@@ -80,7 +80,7 @@ select_moneda = sidebar.selectbox('Elija el nivel educativo',
                                     options = ["BTC", "ETH"])
 select_perfil = sidebar.selectbox('Elija el nivel educativo',
                                     options = ["conservador", "moderado", "agresivo", "super_agresivo", "hodler", "yolo"])
-select_amount = sidebar.slider(f'Cantidad de {select_moneda}', 0.0, 100.0, 1.0)
+select_amount = sidebar.slider(f'Cantidad de {select_moneda}', 0.0, 100.0, 15.0)
 #=====================================
 
 risk_df = get_risk_data(select_moneda)
@@ -95,8 +95,10 @@ st.write("""
 
 fig = px.line(risk_df, x="date_time", y="risk_price", title="Risk Graph")
 st.plotly_chart(fig)
+show_data = st.checkbox('Mostrar tabla')
 
-st.write(risk_df)
+if show_data:
+    st.write(risk_df)
 
 st.markdown('___')
 
