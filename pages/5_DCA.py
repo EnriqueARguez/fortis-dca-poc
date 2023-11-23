@@ -34,9 +34,6 @@ select_moneda = sidebar.selectbox('Elija el nivel educativo',
                               options = ["BTC", "ETH"])
 #=====================================
 
-st.set_page_config(page_title="Mi Dashboard",
-                   page_icon=":busts_in_silhouette:")
-
 risk_df = get_risk_data()
 
 st.header("DCA Strategy")
