@@ -110,7 +110,7 @@ st.write(f"""
 """)
 
 dca_sell_df = calculate_sell_dca(mldata_df, sell_matrix, select_amount)
-dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct']
+dca_sell_df.columns = ['perfil_riesgo', 'banda_40pct', 'banda_50pct', 'banda_60pct', 'banda_70pct', 'banda_80pct', 'banda_90pct', 'ganancia_total']
 
 st.write(dca_sell_df)
 
