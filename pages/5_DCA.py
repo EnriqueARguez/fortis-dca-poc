@@ -141,3 +141,5 @@ st.write(f"""
     A continuación se muestra la matriz de venta DCA para\
     la cantidad a comprar de {0 if select_amount2 == '' else select_amount2} USD.
 """)
+
+st.write(buy_matrix)
