@@ -73,7 +73,7 @@ select_moneda = sidebar.selectbox('Elija el nivel educativo',
                                     options = ["BTC", "ETH"])
 select_perfil = sidebar.selectbox('Elija el nivel educativo',
                                     options = ["conservador", "moderado", "agresivo", "super_agresivo", "hodler", "yolo"])
-select_amount = st.slider(f'Cantidad de {select_moneda}', 0.0001, 1000, 0.0001)
+select_amount = st.slider(f'Cantidad de {select_moneda}', 0.0001, 1000.0, 0.0001)
 #=====================================
 
 risk_df = get_risk_data(select_moneda)
