@@ -107,7 +107,7 @@ st.header('Matriz DCA Venta')
 
 st.write(f"""
     A continuación se muestra la matriz de venta DCA para\
-    la cantidad a vender de {select_amount} {select_moneda}.
+    la cantidad a vender de {select_amount.replace('','0')} {select_moneda}.
 """)
 
 dca_sell_df = calculate_sell_dca(mldata_df, sell_matrix, float(select_amount.replace('','0')))
